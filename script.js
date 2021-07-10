@@ -1,5 +1,5 @@
 
-function generator(matLen, gr, grEat, pr, sn, cw) {
+function generator(matLen, gr, grEat, pr, sn, cw, vl, la) {
     let matrix = [];
     for (let i = 0; i < matLen; i++) {
         matrix[i] = [];
@@ -42,13 +42,26 @@ function generator(matLen, gr, grEat, pr, sn, cw) {
             matrix[x][y] = 5;
         }
     }
-
+    for (let i = 0; i < vl; i++) {
+        let x = Math.floor(Math.random() * matLen);
+        let y = Math.floor(Math.random() * matLen);
+        if (matrix[x][y] == 0) {
+            matrix[x][y] = 6;
+        }
+    }
+    for (let i = 0; i < la; i++) {
+        let x = Math.floor(Math.random() * matLen);
+        let y = Math.floor(Math.random() * matLen);
+        if (matrix[x][y] == 0) {
+            matrix[x][y] = 7;
+        }
+    }
     return matrix;
 }
 
 let side = 20;
 
-let matrix = generator(15, 50, 3, 10, 3, 5);
+let matrix = generator(15, 0, 0, 0, 0, 0, 0, 10);
 var grassArr = []
 
 var grassEaterArr = []
@@ -58,6 +71,10 @@ var predatorArr = []
 var sunkArr = []
 
 var cowArr = []
+
+var volcanoArr = []
+
+var lavaArr = []
 
 function setup() {
     frameRate(5);
@@ -89,6 +106,16 @@ function setup() {
                 cowArr.push(ge);
 
             }
+            else if (matrix[y][x] == 6) {
+                var ge = new Volcano(x, y);
+                volcanoArr.push(ge);
+
+            }
+            else if (matrix[y][x] == 7) {
+                var ge = new Lava(x, y);
+                lavaArr.push(ge);
+
+            }
             else if (matrix[y][x] == 8) {
 
             }
@@ -110,14 +137,13 @@ function draw() {
                 fill("#acacac");
                 rect(x * side, y * side, side, side);
 
-
             }
             else if (matrix[y][x] == 2) {
-                fill("red");
+                fill("yellow");
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 3) {
-                fill("black");
+                fill("blue");
                 rect(x * side, y * side, side, side);
             }
 
@@ -129,7 +155,17 @@ function draw() {
                 fill("pink");
                 rect(x * side, y * side, side, side);
             }
+            else if (matrix[y][x] == 6) {
+                fill("black");
+                rect(x * side, y * side, side, side);
+
+            }        
+            else if (matrix[y][x] == 7) {
+                fill("red");
+                rect(x * side, y * side, side, side);
+            }
         }
+
     }
     for (i in grassArr) {
         grassArr[i].mul()
@@ -143,12 +179,15 @@ function draw() {
     for (i in predatorArr) {
         predatorArr[i].mul()
         predatorArr[i].eat()
-
     }
 
     for (i in cowArr) {
         cowArr[i].mul()
         cowArr[i].eat()
+
+    }
+    for (i in lavaArr) {
+        lavaArr[i].mul()
 
     }
 }

@@ -1,7 +1,6 @@
-class Sunk extends LivingCreature{
+class Volcano extends LivingCreature{
     constructor(x, y) {
         super(x, y)   
-        this.energy = 8;
         this.multiply = 0
     }
 
@@ -23,15 +22,10 @@ class Sunk extends LivingCreature{
         return found;
     }
 
-  
+    create() {
+       if (lavaArr.length <= 10) {
 
-    die() {
-        matrix[this.y][this.x] = 0;
-        for (var i in sunkArr) {
-            if (this.x == sunkArr[i].x && this.y == sunkArr[i].y) {
-                sunkArr.splice(i, 1);
-                break;
-            }
-        }
+       }
     }
+
 }
